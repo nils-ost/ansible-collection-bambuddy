@@ -1,0 +1,9 @@
+argument_specs:
+  main:
+    short_description: configures basic BamBuddy capabilities
+    description:
+      - configures BamBuddy with some basic options
+      - requires already running BamBuddy (e.g. through role ``install_with_docker``)
+    author:
+      - Nils Ost (@nils-ost)
+    version_added: 1.0.0

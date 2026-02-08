@@ -1,0 +1,5 @@
+---
+bambuddy_compose_dir: /opt/bambuddy
+bambuddy_auto_upgrade: false
+bambuddy_port: 8000
+bambuddy_timezone: Europe/Berlin

@@ -1,0 +1,7 @@
+argument_specs:
+  main:
+    short_description: installs BamBuddy within docker
+    description: a role for installing BamBuddy as a docker container with the help of compose
+    author:
+      - Nils Ost (@nils-ost)
+    version_added: 1.0.0

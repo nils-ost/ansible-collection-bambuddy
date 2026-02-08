@@ -1,0 +1,13 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: basic_config
+  author: Nils Ost (@nils-ost)
+  description: configures basic BamBuddy capabilities
+  license: GPL-3.0-or-later
+  min_ansible_version: 2.13.9
+  galaxy_tags:
+    - bambuddy
+    - 3dprinter
+    - management

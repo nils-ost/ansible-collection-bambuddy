@@ -1,0 +1,20 @@
+bambuddy_port: 8000
+
+bambuddy_virtual_printer_models:
+  A1: N2S
+  A1 Mini: N1
+  H2C: O1C
+  H2D: O1D
+  H2S: O1S
+  P1P: C11
+  P1S: C12
+  P2S: N7
+  X1: 3DPrinter-X1
+  X1C: 3DPrinter-X1-Carbon
+  X1E: C13
+
+bambuddy_virtual_printer_modes:
+  - immediate
+  - review
+  - print_queue
+  - proxy

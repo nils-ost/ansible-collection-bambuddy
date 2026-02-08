@@ -1,0 +1,13 @@
+---
+- name: fetch API token
+  nils_ost.bambuddy.token:
+    host: "{{ ansible_host }}"
+    port: "{{ bambuddy_port }}"
+    user: "{{ bambuddy_user | default(omit) }}"
+    password: "{{ bambuddy_user_password | default(omit) }}"
+  delegate_to: localhost
+  register: bambuddy
+
+- name: deb
+  debug:
+    msg: "{{ bambuddy }}"
