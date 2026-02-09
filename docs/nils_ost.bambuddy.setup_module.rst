@@ -1,11 +1,11 @@
-.. _nils_ost.bambuddy.token_module:
+.. _nils_ost.bambuddy.setup_module:
 
 
 ***********************
-nils_ost.bambuddy.token
+nils_ost.bambuddy.setup
 ***********************
 
-**fetch bambuddy API token (login)**
+**executes initial setup**
 
 
 Version added: 1.0.0
@@ -17,10 +17,9 @@ Version added: 1.0.0
 
 Synopsis
 --------
-- If authentication is enabled, BamBuddy API calls require a valid token
-- this module fetches such tokens from your instance, by logging in with username and password
-- which then can be used for other modules in this collection
-- in case autehntication is not enabled, this module can be used to build the base URL for API instance, which can be handy in some circumstances
+- this modules executes the initial setup (first steps)
+- if a username and password is given, authentication is enabled and the corresponding admin user created
+- if username is left empty, authentication is disabled and the setup is marked as completed
 
 
 
@@ -65,7 +64,7 @@ Parameters
                         <b>Default:</b><br/><div style="color: blue">null</div>
                 </td>
                 <td>
-                        <div>password to authenticate on bambuddy instance</div>
+                        <div>password to be configured for user</div>
                 </td>
             </tr>
             <tr>
@@ -116,7 +115,7 @@ Parameters
                         <b>Default:</b><br/><div style="color: blue">null</div>
                 </td>
                 <td>
-                        <div>user to authenticate on bambuddy instance</div>
+                        <div>username to be configured</div>
                 </td>
             </tr>
     </table>
@@ -130,64 +129,21 @@ Examples
 
 .. code-block:: yaml
 
-    # fetch a token
-    - name: fetch bambuddy API token
-      nils_ost.bambuddy.token:
+    # setup with authentication disabled
+    - name: setup with authentication disabled
+      nils_ost.bambuddy.setup:
         host: "{{ ansible_host }}"
-        user: "{{ root_user }}"
-        password: "{{ root_password_long }}"
       delegate_to: localhost
-      register: bambuddy
+
+    # setup with authentication enabled and create admin user
+    - name: setup with authentication
+      nils_ost.bambuddy.setup:
+        host: "{{ ansible_host }}"
+        user: admin
+        password "{{ bambuddy_password }}"
+      delegate_to: localhost
 
 
-
-Return Values
--------------
-Common return values are documented `here <https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html#common-return-values>`_, the following are the fields unique to this module:
-
-.. raw:: html
-
-    <table border=0 cellpadding=0 class="documentation-table">
-        <tr>
-            <th colspan="1">Key</th>
-            <th>Returned</th>
-            <th width="100%">Description</th>
-        </tr>
-            <tr>
-                <td colspan="1">
-                    <div class="ansibleOptionAnchor" id="return-"></div>
-                    <b>token</b>
-                    <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
-                    <div style="font-size: small">
-                      <span style="color: purple">string</span>
-                    </div>
-                </td>
-                <td>always</td>
-                <td>
-                            <div>newly created API token for given user</div>
-                            <div>can be null if login failed or user is null</div>
-                    <br/>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="1">
-                    <div class="ansibleOptionAnchor" id="return-"></div>
-                    <b>url</b>
-                    <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
-                    <div style="font-size: small">
-                      <span style="color: purple">string</span>
-                    </div>
-                </td>
-                <td>always</td>
-                <td>
-                            <div>the URL build from protocol, host and port, to be used on other modules</div>
-                    <br/>
-                        <div style="font-size: smaller"><b>Sample:</b></div>
-                        <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">http://192.168.0.6:8000</div>
-                </td>
-            </tr>
-    </table>
-    <br/><br/>
 
 
 Status

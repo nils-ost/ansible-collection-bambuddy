@@ -67,6 +67,7 @@ EXAMPLES = r"""
     host: "{{ ansible_host }}"
     user: "{{ root_user }}"
     password: "{{ root_password_long }}"
+  delegate_to: localhost
   register: bambuddy
 """
 
@@ -120,7 +121,7 @@ def run_module():
             "url"
         ] = f"{module.params['protocol']}://{module.params['host']}:{module.params['port']}"
 
-        if module.params["user"] is None:
+        if module.params["user"] is None or module.params["user"] == "":
             module.exit_json(**result)
 
         headers = dict()

@@ -148,9 +148,9 @@ def run_module():
     try:
         url = module.params["url"]
 
-        s = requests.Session
+        s = requests.Session()
         s.headers["Content-Type"] = "application/json"
-        if module.params["token"] is not None:
+        if module.params["token"] is not None and not module.params["token"] == "":
             s.headers["Authorization"] = "Bearer %s" % module.params["token"]
 
         response = s.get(url + "/api/v1/settings/virtual-printer")

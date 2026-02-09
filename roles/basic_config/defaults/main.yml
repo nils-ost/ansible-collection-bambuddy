@@ -15,9 +15,3 @@ bambuddy_virtual_printer_models:
   X1: 3DPrinter-X1
   X1C: 3DPrinter-X1-Carbon
   X1E: C13
-
-bambuddy_virtual_printer_modes:
-  - immediate
-  - review
-  - print_queue
-  - proxy

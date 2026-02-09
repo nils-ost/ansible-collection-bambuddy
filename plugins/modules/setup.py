@@ -13,19 +13,18 @@ from ansible.module_utils.basic import AnsibleModule
 
 DOCUMENTATION = r"""
 ---
-module: token
+module: setup
 
 author: Nils Ost (@nils-ost)
 
 version_added: "1.0.0"
 
-short_description: fetch bambuddy API token (login)
+short_description: executes initial setup
 
 description:
-    - If authentication is enabled, BamBuddy API calls require a valid token
-    - this module fetches such tokens from your instance, by logging in with username and password
-    - which then can be used for other modules in this collection
-    - in case autehntication is not enabled, this module can be used to build the base URL for API instance, which can be handy in some circumstances
+    - this modules executes the initial setup (first steps)
+    - if a username and password is given, authentication is enabled and the corresponding admin user created
+    - if username is left empty, authentication is disabled and the setup is marked as completed
 
 options:
     protocol:
@@ -48,41 +47,35 @@ options:
         default: 8000
     user:
         description:
-            - user to authenticate on bambuddy instance
+            - username to be configured
         required: false
         type: str
         default: null
     password:
         description:
-            - password to authenticate on bambuddy instance
+            - password to be configured for user
         required: false
         type: str
         default: null
 """
 
 EXAMPLES = r"""
-# fetch a token
-- name: fetch bambuddy API token
-  nils_ost.bambuddy.token:
+# setup with authentication disabled
+- name: setup with authentication disabled
+  nils_ost.bambuddy.setup:
     host: "{{ ansible_host }}"
-    user: "{{ root_user }}"
-    password: "{{ root_password_long }}"
-  register: bambuddy
+  delegate_to: localhost
+
+# setup with authentication enabled and create admin user
+- name: setup with authentication
+  nils_ost.bambuddy.setup:
+    host: "{{ ansible_host }}"
+    user: admin
+    password "{{ bambuddy_password }}"
+  delegate_to: localhost
 """
 
 RETURN = r"""
-url:
-    description:
-        - the URL build from protocol, host and port, to be used on other modules
-    type: str
-    returned: always
-    sample: 'http://192.168.0.6:8000'
-token:
-    description:
-        - newly created API token for given user
-        - can be null if login failed or user is null
-    type: str
-    returned: always
 """
 
 
@@ -117,7 +110,7 @@ def run_module():
     try:
         url = f"{module.params['protocol']}://{module.params['host']}:{module.params['port']}"
 
-        s = requests.Session
+        s = requests.Session()
         s.headers["Content-Type"] = "application/json"
 
         response = s.get(url + "/api/v1/auth/status")
@@ -136,7 +129,7 @@ def run_module():
             module.exit_json(msg="would execute setup now", **result)
 
         result["changed"] = True
-        if module.params["user"] is None:
+        if module.params["user"] is None or module.params["user"] == "":
             # just send a complete
             data = dict(
                 auth_enabled=False,
@@ -148,20 +141,23 @@ def run_module():
                     response=response.text,
                     **result,
                 )
+        else:
+            # setup admin user
+            if module.params["password"] is None or module.params["password"] == "":
+                module.fail_json(msg="password required to create admin user", **result)
 
-        # setup admin user
-        data = dict(
-            admin_username=module.params["user"],
-            admin_password=module.params["password"],
-            auth_enabled=True,
-        )
-        response = s.post(url + "/api/v1/auth/setup", json=data)
-        if not response.status_code == 200:
-            module.fail_json(
-                msg="error on creating admin user",
-                response=response.text,
-                **result,
+            data = dict(
+                admin_username=module.params["user"],
+                admin_password=module.params["password"],
+                auth_enabled=True,
             )
+            response = s.post(url + "/api/v1/auth/setup", json=data)
+            if not response.status_code == 200:
+                module.fail_json(
+                    msg="error on creating admin user",
+                    response=response.text,
+                    **result,
+                )
 
         module.exit_json(msg="finished setup", **result)
 

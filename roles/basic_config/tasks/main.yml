@@ -8,6 +8,13 @@
   delegate_to: localhost
   register: bambuddy
 
+- name: configure virtual_printer
+  nils_ost.bambuddy.virtual_printer:
+    url: "{{ bambuddy.url }}"
+    token: "{{ bambuddy.token }}"
+  delegate_to: localhost
+  register: deb
+
 - name: deb
   debug:
-    msg: "{{ bambuddy }}"
+    msg: "{{ deb }}"
