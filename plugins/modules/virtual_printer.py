@@ -94,37 +94,37 @@ RETURN = r"""
 """
 
 
-def search(url, token, name):
-    uri = f"{url}/api/nginx/certificates"
-
-    headers = dict()
-    headers["Authorization"] = "Bearer %s" % token
-    headers["Content-Type"] = "application/json"
-
-    response = requests.get(uri, headers=headers)
-    if not response.status_code == 200:
-        return (False, response.text)
-
-    for item in response.json():
-        if name in item.get("domain_names", list()):
-            return (True, item)
-    return (True, None)
-
-
 def run_module():
     # define available arguments/parameters a user can pass to the module
     module_args = dict(
         url=dict(type="str", required=True),
-        token=dict(type="str", required=True, no_log=True),
-        domain_name=dict(type="str", required=True),
-        provider=dict(
+        token=dict(type="str", required=False, default=None, no_log=True),
+        enabled=dict(type="bool", required=False, default=True),
+        accesscode=dict(type="str", required=False, default="12345678"),
+        model=dict(
             type="str",
             required=False,
-            default="other",
-            choices=["domainoffensive", "other"],
+            default="3DPrinter-X1-Carbon",
+            choices=[
+                "N2S",
+                "N1",
+                "O1C",
+                "O1D",
+                "O1S",
+                "C11",
+                "C12",
+                "N7",
+                "3DPrinter-X1",
+                "3DPrinter-X1-Carbon",
+                "C13",
+            ],
         ),
-        provider_credentials=dict(type="str", required=False, default=""),
-        state=dict(type="str", default="present", choices=["absent", "present"]),
+        mode=dict(
+            type="str",
+            required=False,
+            default="immediate",
+            choices=["immediate", "review", "print_queue", "proxy"],
+        ),
     )
 
     # seed the result dict in the object
@@ -134,7 +134,6 @@ def run_module():
     # for consumption, for example, in a subsequent task
     result = dict(
         changed=False,
-        item=None,
     )
 
     # the AnsibleModule object will be our abstraction working with Ansible
@@ -161,21 +160,43 @@ def run_module():
                 response=response.text,
                 **result,
             )
-        """ full get response
-        {"enabled":true,"access_code_set":true,"mode":"immediate","model":"3DPrinter-X1","target_printer_id":1,"remote_interface_ip":""}
-        """
 
-        """ put params
-        /api/v1/settings/virtual-printer
-        enabled
-        mode
-        model
-        access_code
-        """
-        module.exit_json(
-            msg="ok message",
-            **result,
-        )
+        update_required = False
+        if not module.params["enabled"] == response.json()["enabled"]:
+            update_required = True
+        if module.params["enabled"]:
+            if not module.params["mode"] == response.json()["mode"]:
+                update_required = True
+            if not module.params["model"] == response.json()["model"]:
+                update_required = True
+
+        if not update_required:
+            module.exit_json(msg="configuration already as requested", **result)
+        elif module.check_mode:
+            result["changed"] = True
+            module.exit_json(msg="would have updated configuration", **result)
+        else:
+            result["changed"] = True
+            if module.params["enabled"]:
+                data = dict(
+                    access_code=module.params["accesscode"],
+                    enabled=module.params["enabled"],
+                    model=module.params["model"],
+                    mode=module.params["mode"],
+                )
+            else:
+                data = dict(
+                    enabled=module.params["enabled"],
+                )
+            response = s.put(url + "/api/v1/settings/virtual-printer", params=data)
+            if not response.status_code == 200:
+                module.exit_json(
+                    msg="error setting configuration",
+                    response=response.text,
+                    **result,
+                )
+
+        module.exit_json(msg="setting configuration successful", **result)
 
     except Exception as e:
         module.fail_json(msg=f"Error: {e}", **result)

@@ -19,6 +19,7 @@ Synopsis
 --------
 - If authentication is enabled, BamBuddy API calls require a valid token
 - this module fetches such tokens from your instance, by logging in with username and password
+- which then can be used for other modules in this collection
 - in case autehntication is not enabled, this module can be used to build the base URL for API instance, which can be handy in some circumstances
 
 
