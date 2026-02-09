@@ -1,5 +1,8 @@
 bambuddy_port: 8000
 
+bambuddy_user: null
+bambuddy_user_password: null
+
 bambuddy_virtual_printer_models:
   A1: N2S
   A1 Mini: N1

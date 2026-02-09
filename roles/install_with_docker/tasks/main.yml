@@ -42,3 +42,11 @@
     sleep: 2
     delay: 10
   when: compose_start.changed
+
+- name: execute API setup
+  nils_ost.bambuddy.setup:
+    host: "{{ ansible_host }}"
+    port: "{{ bambuddy_port }}"
+    user: "{{ bambuddy_user | default(omit) }}"
+    password: "{{ bambuddy_user_password | default(omit) }}"
+  delegate_to: localhost
