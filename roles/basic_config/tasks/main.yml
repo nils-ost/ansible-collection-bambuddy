@@ -13,6 +13,34 @@
     url: "{{ bambuddy.url }}"
     token: "{{ bambuddy.token }}"
   delegate_to: localhost
+
+- name: configure common settings
+  nils_ost.bambuddy.settings:
+    url: "{{ bambuddy.url }}"
+    token: "{{ bambuddy.token }}"
+    ams_humidity_fair: "{{ bambuddy_common_settings.ams_humidity_fair | default(omit) }}"
+    ams_humidity_good: "{{ bambuddy_common_settings.ams_humidity_good | default(omit) }}"
+    ams_temp_fair: "{{ bambuddy_common_settings.ams_temp_fair | default(omit) }}"
+    ams_temp_good: "{{ bambuddy_common_settings.ams_temp_good | default(omit) }}"
+    auto_archive: "{{ bambuddy_common_settings.auto_archive | default(omit) }}"
+    capture_finish_photo: "{{ bambuddy_common_settings.capture_finish_photo | default(omit) }}"
+    save_thumbnails: "{{ bambuddy_common_settings.save_thumbnails | default(omit) }}"
+    camera_view_mode: "{{ bambuddy_common_settings.camera_view_mode | default(omit) }}"
+    check_printer_firmware: "{{ bambuddy_common_settings.check_printer_firmware | default(omit) }}"
+    check_updates: "{{ bambuddy_common_settings.check_updates | default(omit) }}"
+    currency: "{{ bambuddy_common_settings.currency | default(omit) }}"
+    default_filament_cost: "{{ bambuddy_common_settings.default_filament_cost | default(omit) }}"
+    energy_cost_per_kwh: "{{ bambuddy_common_settings.energy_cost_per_kwh | default(omit) }}"
+    energy_tracking_mode: "{{ bambuddy_common_settings.energy_tracking_mode | default(omit) }}"
+    external_url: "{{ bambuddy_common_settings.external_url | default(omit) }}"
+    ha_enabled: "{{ bambuddy_common_settings.ha_enabled | default(omit) }}"
+    ha_token: "{{ bambuddy_common_settings.ha_token | default(omit) }}"
+    ha_url: "{{ bambuddy_common_settings.ha_url | default(omit) }}"
+    library_archive_mode: "{{ bambuddy_common_settings.library_archive_mode | default(omit) }}"
+    library_disk_warning_gb: "{{ bambuddy_common_settings.library_disk_warning_gb | default(omit) }}"
+    prometheus_enabled: "{{ bambuddy_common_settings.prometheus_enabled | default(omit) }}"
+    prometheus_token: "{{ bambuddy_common_settings.prometheus_token | default(omit) }}"
+  delegate_to: localhost
   register: deb
 
 - name: deb

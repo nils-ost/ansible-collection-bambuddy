@@ -124,11 +124,11 @@ def run_module():
         if not response.json()["requires_setup"]:
             module.exit_json(msg="setup already completed", **result)
 
+        result["changed"] = True
+
         if module.check_mode:
-            result["changed"] = True
             module.exit_json(msg="would execute setup now", **result)
 
-        result["changed"] = True
         if module.params["user"] is None or module.params["user"] == "":
             # just send a complete
             data = dict(

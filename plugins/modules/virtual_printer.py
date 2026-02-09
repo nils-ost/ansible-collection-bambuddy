@@ -172,29 +172,30 @@ def run_module():
 
         if not update_required:
             module.exit_json(msg="configuration already as requested", **result)
-        elif module.check_mode:
-            result["changed"] = True
+
+        result["changed"] = True
+
+        if module.check_mode:
             module.exit_json(msg="would have updated configuration", **result)
+
+        if module.params["enabled"]:
+            data = dict(
+                access_code=module.params["accesscode"],
+                enabled=module.params["enabled"],
+                model=module.params["model"],
+                mode=module.params["mode"],
+            )
         else:
-            result["changed"] = True
-            if module.params["enabled"]:
-                data = dict(
-                    access_code=module.params["accesscode"],
-                    enabled=module.params["enabled"],
-                    model=module.params["model"],
-                    mode=module.params["mode"],
-                )
-            else:
-                data = dict(
-                    enabled=module.params["enabled"],
-                )
-            response = s.put(url + "/api/v1/settings/virtual-printer", params=data)
-            if not response.status_code == 200:
-                module.exit_json(
-                    msg="error setting configuration",
-                    response=response.text,
-                    **result,
-                )
+            data = dict(
+                enabled=module.params["enabled"],
+            )
+        response = s.put(url + "/api/v1/settings/virtual-printer", params=data)
+        if not response.status_code == 200:
+            module.exit_json(
+                msg="error setting configuration",
+                response=response.text,
+                **result,
+            )
 
         module.exit_json(msg="setting configuration successful", **result)
 
