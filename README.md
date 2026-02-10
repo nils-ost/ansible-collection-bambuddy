@@ -25,6 +25,8 @@ As this collection is intended to do it's module call `delegate_to: localhost` i
 ### Modules
 Name | Description
 --- | ---
+[nils_ost.bambuddy.list](https://github.com/nils-ost/ansible-collection-bambuddy/blob/main/docs/nils_ost.bambuddy.list_module.rst)|lists all elements
+[nils_ost.bambuddy.printer](https://github.com/nils-ost/ansible-collection-bambuddy/blob/main/docs/nils_ost.bambuddy.printer_module.rst)|manage printer
 [nils_ost.bambuddy.settings](https://github.com/nils-ost/ansible-collection-bambuddy/blob/main/docs/nils_ost.bambuddy.settings_module.rst)|configure common settings
 [nils_ost.bambuddy.setup](https://github.com/nils-ost/ansible-collection-bambuddy/blob/main/docs/nils_ost.bambuddy.setup_module.rst)|executes initial setup
 [nils_ost.bambuddy.token](https://github.com/nils-ost/ansible-collection-bambuddy/blob/main/docs/nils_ost.bambuddy.token_module.rst)|fetch bambuddy API token (login)
