@@ -99,7 +99,7 @@ def run_module():
     module_args = dict(
         url=dict(type="str", required=True),
         token=dict(type="str", required=False, default=None, no_log=True),
-        enabled=dict(type="bool", required=False, default=True),
+        enabled=dict(type="bool", required=False, default=False),
         accesscode=dict(type="str", required=False, default="12345678"),
         model=dict(
             type="str",

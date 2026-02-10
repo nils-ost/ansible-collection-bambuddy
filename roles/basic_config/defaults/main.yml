@@ -5,6 +5,8 @@ bambuddy_user_password: null
 
 bambuddy_common_settings: {}
 
+bambuddy_virtual_printer: {}
+
 bambuddy_printers: {}
 
 bambuddy_virtual_printer_models:
