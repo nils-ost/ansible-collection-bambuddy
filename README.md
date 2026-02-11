@@ -1,6 +1,7 @@
 # Ansible Collection - nils_ost.bambuddy
 
-This repository contains the `nils_ost.bambuddy` Ansible Collection.
+This repository contains the `nils_ost.bambuddy` Ansible Collection. For installing and configuring a BamBuddy instance.  
+A full example can be found at the bottom of [nils_ost.bambuddy.basic_config](https://github.com/nils-ost/ansible-collection-bambuddy/blob/main/roles/basic_config/README.md) role documentation.
 
 <!--start requires_ansible-->
 ## Ansible version compatibility
@@ -14,10 +15,14 @@ A collection may contain metadata that identifies these versions.
 PEP440 is the schema used to describe the versions of Ansible.
 <!--end requires_ansible-->
 
+## BamBuddy version compatibility
+
+This collection has been tested against following BamBuddy versions: **=0.1.8.1** and **=0.1.9**
+
 ## External requirements
 
 Currently only the `requests` Python library is required by this collection, to be able to run the modules.
-As this collection is intended to do it's module call `delegate_to: localhost` it's enough to `pip install requests` locally.
+As this collection is intended to do it's module calls `delegate_to: localhost` it's enough to `pip install requests` locally.
 
 ## Included content
 
@@ -38,8 +43,8 @@ Name | Description
 
 Name | Description
 --- | ---
-[nils_ost.bambuddy.install_with_docker](https://github.com/nils-ost/ansible-collection-bambuddy/blob/main/roles/install_with_docker/README.md)|installs Nginx Proxy Manager within docker
-[nils_ost.bambuddy.basic_config](https://github.com/nils-ost/ansible-collection-bambuddy/blob/main/roles/basic_config/README.md)|configures Nginx Proxy Manager with basic capabilities
+[nils_ost.bambuddy.install_with_docker](https://github.com/nils-ost/ansible-collection-bambuddy/blob/main/roles/install_with_docker/README.md)|installs BamBuddy within docker
+[nils_ost.bambuddy.basic_config](https://github.com/nils-ost/ansible-collection-bambuddy/blob/main/roles/basic_config/README.md)|configures BamBuddy with basic capabilities
 
 ## Using this collection
 
@@ -82,9 +87,9 @@ See the
 
 ## Roadmap
 
-This collection is mainly intended to be used by myself. Therefor I'm just developing the stuff I need for my current projects on a irregular basis.
-But if you find some benefit in this collection, feel free to use it. If you like to have some features added feel free to create a pull-request
-or write an issue with a feature-request and I'm going to see if I can make it happen.
+This collection is mainly intended to be used by myself. Therefor I'm just developing the stuff I need for my current projects on a irregular basis,
+but I try to include more options then I currently need for my usecases. If you find some benefit in this collection, feel free to use it.
+If you like to have some features added, feel free to create a pull-request or write an issue with a feature-request and I'm going to see if I can make it happen.
 
 ## Licensing
 

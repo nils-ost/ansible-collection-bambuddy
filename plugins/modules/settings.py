@@ -41,25 +41,25 @@ options:
         default: null
     ams_humidity_good:
         description:
-            - AMS humidity value lower or equal is in state green (value between 1 and 100)
+            - if AMS humidity value is lower or equal the state is green (value between 1 and 100)
         required: false
         type: int
         default: 40
     ams_humidity_fair:
         description:
-            - AMS humidity value above which is in state red (value between 1 and 100)
+            - if AMS humidity value is above the state is red (value between 1 and 100)
         required: false
         type: int
         default: 60
     ams_temp_good:
         description:
-            - AMS temperature value lower or equal is in state green
+            - if AMS temperature value is lower or equal the state is green
         required: false
         type: float
         default: 28.0
     ams_temp_fair:
         description:
-            - AMS temperature value above which is in state red
+            - if AMS temperature value is above the state is red
         required: false
         type: float
         default: 35.0

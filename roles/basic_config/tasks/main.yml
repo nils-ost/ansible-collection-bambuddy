@@ -64,54 +64,6 @@
     mode: "{{ bambuddy_virtual_printer.mode | default(omit) }}"
   delegate_to: localhost
 
-- name: Pulling existing printers
-  nils_ost.bambuddy.list:
-    url: "{{ bambuddy.url }}"
-    token: "{{ bambuddy.token }}"
-    target: printer
-  delegate_to: localhost
-  register: existing_printers
-
-- name: Purging unconfigured printers
-  nils_ost.bambuddy.printer:
-    url: "{{ bambuddy.url }}"
-    token: "{{ bambuddy.token }}"
-    name: "{{ existing_printer_id }}"
-    state: "absent"
-  delegate_to: localhost
-
-  when: existing_printer_id not in bambuddy_printers
-
-  vars:
-    existing_printer_id: "{{ existing_printer_item.name }}"
-
-  loop_control:
-    loop_var: existing_printer_item
-    label: "{{ existing_printer_item.name }}"
-  with_items: "{{ existing_printers.data }}"
-
-- name: Creating printers
-  nils_ost.bambuddy.printer:
-    url: "{{ bambuddy.url }}"
-    token: "{{ bambuddy.token }}"
-    name: "{{ printer_id }}"
-
-    ip_address: "{{ printer.ip_address | default(omit) }}"
-    serial_number: "{{ printer.serial_number | default(omit) }}"
-    access_code: "{{ printer.access_code | default(omit) }}"
-    model: "{{ printer.model | default(omit) }}"
-    location: "{{ printer.location | default(omit) }}"
-    auto_archive: "{{ printer.auto_archive | default(omit) }}"
-
-    state: "present"
-  delegate_to: localhost
-
-  vars:
-    printer: "{{ printer_item.value }}"
-    printer_id: "{{ printer_item.key }}"
-
-  loop_control:
-    loop_var: printer_item
-    label: "{{ printer_item.key }}"
-  with_dict: "{{ bambuddy_printers }}"
-  register: created_printers
+- name: include printer management
+  include_tasks: printers.yml
+  when: bambuddy_printers.keys() | length > 0

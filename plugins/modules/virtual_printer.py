@@ -42,7 +42,7 @@ options:
             - state of virtual_printer
         required: false
         type: bool
-        default: true
+        default: false
     accesscode:
         description:
             - accesscode (from slicer) for virtual printer

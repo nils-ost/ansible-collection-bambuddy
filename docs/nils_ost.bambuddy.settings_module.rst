@@ -46,7 +46,7 @@ Parameters
                         <b>Default:</b><br/><div style="color: blue">60</div>
                 </td>
                 <td>
-                        <div>AMS humidity value above which is in state red (value between 1 and 100)</div>
+                        <div>if AMS humidity value is above the state is red (value between 1 and 100)</div>
                 </td>
             </tr>
             <tr>
@@ -62,7 +62,7 @@ Parameters
                         <b>Default:</b><br/><div style="color: blue">40</div>
                 </td>
                 <td>
-                        <div>AMS humidity value lower or equal is in state green (value between 1 and 100)</div>
+                        <div>if AMS humidity value is lower or equal the state is green (value between 1 and 100)</div>
                 </td>
             </tr>
             <tr>
@@ -78,7 +78,7 @@ Parameters
                         <b>Default:</b><br/><div style="color: blue">35.0</div>
                 </td>
                 <td>
-                        <div>AMS temperature value above which is in state red</div>
+                        <div>if AMS temperature value is above the state is red</div>
                 </td>
             </tr>
             <tr>
@@ -94,7 +94,7 @@ Parameters
                         <b>Default:</b><br/><div style="color: blue">28.0</div>
                 </td>
                 <td>
-                        <div>AMS temperature value lower or equal is in state green</div>
+                        <div>if AMS temperature value is lower or equal the state is green</div>
                 </td>
             </tr>
             <tr>
