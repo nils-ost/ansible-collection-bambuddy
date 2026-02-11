@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "patternProperties": {
+    "^.*": {
+      "type": "object",
+      "properties": {
+        "ip_address": {
+          "type": "string"
+        },
+        "serial_number": {
+          "type": "string"
+        },
+        "access_code": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string",
+          "enum": [
+            "H2C",
+            "H2D",
+            "H2D Pro",
+            "H2S",
+            "X1E",
+            "X1C",
+            "X1",
+            "P2S",
+            "P1S",
+            "P1P",
+            "A1",
+            "A1 Mini"
+          ]
+        },
+        "location": {
+          "type": "string"
+        },
+        "auto_archive": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

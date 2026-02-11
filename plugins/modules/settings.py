@@ -238,7 +238,7 @@ def run_module():
         external_url=dict(type="str", required=False, default=None),  # use url if none
         ha_enabled=dict(type="bool", required=False, default=False),
         ha_url=dict(type="str", required=False, default=""),
-        ha_token=dict(type="str", required=False, default=""),
+        ha_token=dict(type="str", required=False, default="", no_log=True),
         library_archive_mode=dict(
             type="str",
             required=False,
@@ -247,7 +247,7 @@ def run_module():
         ),
         library_disk_warning_gb=dict(type="float", required=False, default=5.0),
         prometheus_enabled=dict(type="bool", required=False, default=False),
-        prometheus_token=dict(type="str", required=False, default=""),
+        prometheus_token=dict(type="str", required=False, default="", no_log=True),
     )
 
     # seed the result dict in the object

@@ -1,4 +1,22 @@
 ---
+# Validating variables(parts) that can't be validated via argument_specs
+- name: Validate common settings config
+  ansible.utils.validate:
+    data: "{{ bambuddy_common_settings }}"
+    criteria:
+      - "{{ lookup('file',  '../criteria/bambuddy_common_settings.json') | from_json }}"
+    engine: ansible.utils.jsonschema
+  when: bambuddy_common_settings.keys() | length > 0
+
+- name: Validate printers config
+  ansible.utils.validate:
+    data: "{{ bambuddy_printers }}"
+    criteria:
+      - "{{ lookup('file',  '../criteria/bambuddy_printers.json') | from_json }}"
+    engine: ansible.utils.jsonschema
+  when: bambuddy_printers.keys() | length > 0
+
+# Start of execution
 - name: Fetch API token
   nils_ost.bambuddy.token:
     host: "{{ ansible_host }}"

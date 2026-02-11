@@ -9,6 +9,7 @@ bambuddy_virtual_printer: {}
 
 bambuddy_printers: {}
 
+# Just a helper for mapping. Key is the common name for a printer and the value is the name to be set as model for a virtual_printer
 bambuddy_virtual_printer_models:
   A1: N2S
   A1 Mini: N1

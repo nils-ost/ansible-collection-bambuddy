@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "ams_humidity_good": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "ams_humidity_fair": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    }
+  }
+}

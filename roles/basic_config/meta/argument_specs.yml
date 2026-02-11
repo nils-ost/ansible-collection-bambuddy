@@ -7,3 +7,152 @@ argument_specs:
     author:
       - Nils Ost (@nils-ost)
     version_added: 1.0.0
+    options:
+      bambuddy_port:
+        type: "int"
+        required: false
+        default: 8000
+      bambuddy_user:
+        type: "str"
+        required: false
+        default: null
+      bambuddy_user_password:
+        type: "str"
+        required: false
+        default: null
+      bambuddy_common_settings:
+        type: "dict"
+        required: false
+        options:
+          ams_humidity_good:
+            type: "int"
+            required: false
+            default: 40 # limits are validate in criteria/bambuddy_common_settings.json
+          ams_humidity_fair:
+            type: "int"
+            required: false
+            default: 60 # limits are validate in criteria/bambuddy_common_settings.json
+          ams_temp_good:
+            type: "float"
+            required: false
+            default: 28.0
+          ams_temp_fair:
+            type: "float"
+            required: false
+            default: 35.0
+          auto_archive:
+            type: "bool"
+            required: false
+            default: true
+          save_thumbnails:
+            type: "bool"
+            required: false
+            default: true
+          capture_finish_photo:
+            type: "bool"
+            required: false
+            default: true
+          camera_view_mode:
+            type: "str"
+            required: false
+            default: "window"
+            choices: ["window", "embedded"]
+          check_updates:
+            type: "bool"
+            required: false
+            default: true
+          check_printer_firmware:
+            type: "bool"
+            required: false
+            default: true
+          currency:
+            type: "str"
+            required: false
+            default: "EUR"
+            choices: ["USD", "EUR", "GBP", "CHF", "JPY", "CNY", "CAD", "AUD"]
+          default_filament_cost:
+            type: "float"
+            required: false
+            default: 25.0
+          energy_cost_per_kwh:
+            type: "float"
+            required: false
+            default: 0.15
+          energy_tracking_mode:
+            type: "str"
+            required: false
+            default: "total"
+            choices: ["print", "total"]
+          external_url:
+            type: "str"
+            required: false
+            default: null
+          ha_enabled:
+            type: "bool"
+            required: false
+            default: false
+          ha_url:
+            type: "str"
+            required: false
+            default: ""
+          ha_token:
+            type: "str"
+            required: false
+            default: ""
+          library_archive_mode:
+            type: "str"
+            required: false
+            default: "ask"
+            choices: ["always", "never", "ask"]
+          library_disk_warning_gb:
+            type: "float"
+            required: false
+            default: 5.0
+          prometheus_enabled:
+            type: "bool"
+            required: false
+            default: false
+          prometheus_token:
+            type: "str"
+            required: false
+            default: ""
+      bambuddy_virtual_printer:
+        type: "dict"
+        required: false
+        options:
+          enabled:
+            type: "bool"
+            required: false
+            default: false
+          accesscode:
+            type: "str"
+            required: false
+            default: "12345678"
+          model:
+            type: "str"
+            required: false
+            default: "3DPrinter-X1-Carbon"
+            choices:
+              [
+                "N2S",
+                "N1",
+                "O1C",
+                "O1D",
+                "O1S",
+                "C11",
+                "C12",
+                "N7",
+                "3DPrinter-X1",
+                "3DPrinter-X1-Carbon",
+                "C13",
+              ]
+          mode:
+            type: "str"
+            required: false
+            default: "immediate"
+            choices: ["immediate", "review", "print_queue", "proxy"]
+      bambuddy_printers:
+        type: "dict"
+        required: false
+        # no deeper validation possible at this point due to limited notation
+        # options are validated in criteria/bambuddy_printers.json

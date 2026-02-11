@@ -191,7 +191,7 @@ def run_module():
         name=dict(type="str", required=True),
         ip_address=dict(type="str", required=False, default=""),
         serial_number=dict(type="str", required=False, default=""),
-        access_code=dict(type="str", required=False, default=""),
+        access_code=dict(type="str", required=False, default="", no_log=True),
         model=dict(
             type="str",
             required=False,
