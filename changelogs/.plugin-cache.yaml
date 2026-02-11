@@ -1,0 +1,57 @@
+objects:
+  role:
+    basic_config:
+      description: configures basic BamBuddy capabilities
+      name: basic_config
+      version_added: 1.0.0
+    install_with_docker:
+      description: installs BamBuddy within docker
+      name: install_with_docker
+      version_added: 1.0.0
+plugins:
+  become: {}
+  cache: {}
+  callback: {}
+  cliconf: {}
+  connection: {}
+  filter: {}
+  httpapi: {}
+  inventory: {}
+  lookup: {}
+  module:
+    list:
+      description: lists all elements
+      name: list
+      namespace: ""
+      version_added: 1.0.0
+    printer:
+      description: manage printer
+      name: printer
+      namespace: ""
+      version_added: 1.0.0
+    settings:
+      description: configure common settings
+      name: settings
+      namespace: ""
+      version_added: 1.0.0
+    setup:
+      description: executes initial setup
+      name: setup
+      namespace: ""
+      version_added: 1.0.0
+    token:
+      description: fetch bambuddy API token (login)
+      name: token
+      namespace: ""
+      version_added: 1.0.0
+    virtual_printer:
+      description: enable or disable virtual_printer feature
+      name: virtual_printer
+      namespace: ""
+      version_added: 1.0.0
+  netconf: {}
+  shell: {}
+  strategy: {}
+  test: {}
+  vars: {}
+version: 1.0.0

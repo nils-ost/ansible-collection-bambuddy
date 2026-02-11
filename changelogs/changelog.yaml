@@ -1,0 +1,40 @@
+ancestor: null
+releases:
+  1.0.0:
+    changes:
+      release_summary:
+        "This is the first proper release of ``nils_ost.bambuddy``
+        collection on 2026-02-11.
+
+        This release contains everything I need to setup my BamBuddy instance for
+        what I like to use it."
+    fragments:
+      - v1.0.0.yml
+    modules:
+      - description: lists all elements.
+        name: list
+        namespace: ""
+      - description: manage printer.
+        name: printer
+        namespace: ""
+      - description: configure common settings.
+        name: settings
+        namespace: ""
+      - description: executes initial setup.
+        name: setup
+        namespace: ""
+      - description: fetch bambuddy API token (login).
+        name: token
+        namespace: ""
+      - description: enable or disable virtual\_printer feature.
+        name: virtual_printer
+        namespace: ""
+    objects:
+      role:
+        - description: configures basic BamBuddy capabilities.
+          name: basic_config
+          namespace: null
+        - description: installs BamBuddy within docker.
+          name: install_with_docker
+          namespace: null
+    release_date: "2026-02-11"

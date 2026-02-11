@@ -39,7 +39,7 @@ antsibull-changelog lint
   * generate changelog `antsibull-changelog release`
   * commit everything
   * build collection `rm *.tar.gz; ansible-galaxy collection build`
-  * publish collection `ansible-galaxy collection publish nils_ost-bambuddy-1.0.0.tar.gz`
+  * publish collection `ansible-galaxy collection publish nils_ost-bambuddy-1.0.0.tar.gz --token `
   * tag the commit with release-version (e.g. `v1.0.0`)
   * push to github `git push origin main; git push origin --tags`
   * create release on GitHub
@@ -50,8 +50,8 @@ antsibull-changelog lint
 
 ```
 release_summary: |
-  This is the first proper release of ``nils_ost.bambuddy`` collection on 2026-02-08.
-  The added Modules and Role were just carried over from other local projects.
+  This is the first proper release of ``nils_ost.bambuddy`` collection on 2026-02-11.
+  This release contains everything I need to setup my BamBuddy instance for what I like to use it.
 ```
 
 ## setup to push to ansible-galaxy
