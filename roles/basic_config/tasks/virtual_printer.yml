@@ -1,0 +1,63 @@
+---
+- name: Configure virtual printer
+  nils_ost.bambuddy.virtual_printer:
+    url: "{{ bambuddy.url }}"
+    token: "{{ bambuddy.token }}"
+    enabled: "{{ bambuddy_virtual_printer.enabled | default(omit) }}"
+    accesscode: "{{ bambuddy_virtual_printer.accesscode | default(omit) }}"
+    model: "{{ bambuddy_virtual_printer.model | default(omit) }}"
+    mode: "{{ bambuddy_virtual_printer.mode | default(omit) }}"
+  delegate_to: localhost
+  register: virtual_printer_config
+
+- name: Install iptables-persistent
+  ansible.builtin.apt:
+    name: iptables-persistent
+    state: present
+  register: install_ipt
+  when: bambuddy_compose_dir is defined and ansible_os_family == "Debian"
+
+- name: Extract Virtual_printer certificate content
+  ansible.builtin.slurp:
+    src: "{{ [bambuddy_compose_dir, 'virtual_printer/certs/bbl_ca.crt'] | path_join }}"
+  register: virtual_printer_cert
+  when: bambuddy_compose_dir is defined
+
+- name: Remember user to inject certificate
+  ansible.builtin.pause:
+    prompt:
+      "\n\nRemember to append the following certificate to your slicer configuration.\n\
+      Detailed information can be found here:\n\
+      https://wiki.bambuddy.cool/features/virtual-printer/#step-2-append-the-bambuddy-ca-certificate-to-slicer\n\n\n\
+      {{ virtual_printer_cert.content | b64decode }}\n\n"
+    seconds: "{{ virtual_printer_config.changed | ternary(5, 1) }}"
+  when: virtual_printer_cert.content is defined
+
+- name: Iptables add forward port 990 to 9990
+  ansible.builtin.iptables:
+    table: nat
+    chain: PREROUTING
+    protocol: tcp
+    destination_port: 990
+    jump: REDIRECT
+    to_ports: 9990
+    comment: Required for BamBuddy virtual_printer FTPS communication
+  when: bambuddy_compose_dir is defined and ansible_os_family == "Debian"
+  register: ipt_forward
+
+- name: Iptables add output redirect port 990 to 9990
+  ansible.builtin.iptables:
+    table: nat
+    chain: OUTPUT
+    out_interface: lo
+    protocol: tcp
+    destination_port: 990
+    jump: REDIRECT
+    to_ports: 9990
+    comment: Required for BamBuddy virtual_printer FTPS communication
+  when: bambuddy_compose_dir is defined and ansible_os_family == "Debian"
+  register: ipt_output
+
+- name: Persist iptables
+  ansible.builtin.shell: "netfilter-persistent save"
+  when: ipt_forward.changed or ipt_forward.changed or install_ipt.changed

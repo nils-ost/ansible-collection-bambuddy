@@ -54,15 +54,8 @@
     prometheus_token: "{{ bambuddy_common_settings.prometheus_token | default(omit) }}"
   delegate_to: localhost
 
-- name: Configure virtual printer
-  nils_ost.bambuddy.virtual_printer:
-    url: "{{ bambuddy.url }}"
-    token: "{{ bambuddy.token }}"
-    enabled: "{{ bambuddy_virtual_printer.enabled | default(omit) }}"
-    accesscode: "{{ bambuddy_virtual_printer.accesscode | default(omit) }}"
-    model: "{{ bambuddy_virtual_printer.model | default(omit) }}"
-    mode: "{{ bambuddy_virtual_printer.mode | default(omit) }}"
-  delegate_to: localhost
+- name: include virtual_printer management
+  include_tasks: virtual_printer.yml
 
 - name: include printer management
   include_tasks: printers.yml

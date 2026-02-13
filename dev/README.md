@@ -30,7 +30,7 @@ antsibull-changelog lint
 
   * build collection `rm *.tar.gz; ansible-galaxy collection build`
   * `cd` to your local testing project and "pull in" the collection (this ensures the correct environment for this project is used)
-    * `ansible-galaxy collection install --force ~/workspace/ansible-collection-bambuddy/nils_ost-bambuddy-1.0.0.tar.gz`
+    * `ansible-galaxy collection install --force ~/workspace/ansible-collection-bambuddy/nils_ost-bambuddy-1.1.0.tar.gz`
 
 ## doing a release
 
@@ -39,8 +39,8 @@ antsibull-changelog lint
   * generate changelog `antsibull-changelog release`
   * commit everything
   * build collection `rm *.tar.gz; ansible-galaxy collection build`
-  * publish collection `ansible-galaxy collection publish nils_ost-bambuddy-1.0.0.tar.gz --token `
-  * tag the commit with release-version (e.g. `v1.0.0`)
+  * publish collection `ansible-galaxy collection publish nils_ost-bambuddy-1.1.0.tar.gz --token `
+  * tag the commit with release-version (e.g. `v1.1.0`)
   * push to github `git push origin main; git push origin --tags`
   * create release on GitHub
 

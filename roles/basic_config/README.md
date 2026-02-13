@@ -21,14 +21,14 @@ if your instance is not using authentication leave `bambuddy_user` set to `null`
 
 ## Role Variables
 
-| Variable                 | Type | Default | Comment                                                |
-| ------------------------ | ---- | ------- | ------------------------------------------------------ |
-| bambuddy_user            | str  | null    | username configured for login (used for API login)     |
-| bambuddy_user_password   | str  | null    | password configured for login (used for API login)     |
-| bambuddy_port            | int  | 8000    | port where the bambuddy API can be reached             |
-| bambuddy_common_settings | dict | {}      | holds system wide configuration options and variables  |
-| bambuddy_virtual_printer | dict | {}      | information if and how virtual_printer shoud be set up |
-| bambuddy_printers        | dict | {}      | holds 3D-printers to be configured                     |
+| Variable                 | Type | Default       | Comment                                                         |
+| ------------------------ | ---- | ------------- | --------------------------------------------------------------- |
+| bambuddy_user            | str  | null          | username configured for login (used for API login)              |
+| bambuddy_user_password   | str  | null          | password configured for login (used for API login)              |
+| bambuddy_port            | int  | 8000          | port where the bambuddy API can be reached                      |
+| bambuddy_common_settings | dict | {}            | holds system wide configuration options and variables           |
+| bambuddy_virtual_printer | dict | {}            | information if and how virtual_printer shoud be set up          |
+| bambuddy_printers        | dict | {}            | holds 3D-printers to be configured                              |
 
 ### Structure of: bambuddy_common_settings
 
