@@ -1,4 +1,11 @@
 ---
+- name: install iptables-persistent
+  ansible.builtin.apt:
+    name: iptables-persistent
+    state: present
+  register: install_iptp
+  when: ansible_os_family == "Debian"
+
 - name: create compose directory
   ansible.builtin.file:
     path: "{{ bambuddy_compose_dir }}"
@@ -32,6 +39,35 @@
     wait: true
     wait_timeout: 10
   register: compose_start
+
+- name: iptables add forward port 990 to 9990
+  ansible.builtin.iptables:
+    table: nat
+    chain: PREROUTING
+    protocol: tcp
+    destination_port: 990
+    jump: REDIRECT
+    to_ports: 9990
+    comment: Required for BamBuddy virtual_printer FTPS communication
+  when: bambuddy_compose_dir is defined and ansible_os_family == "Debian"
+  register: ipt_forward
+
+- name: iptables add output redirect port 990 to 9990
+  ansible.builtin.iptables:
+    table: nat
+    chain: OUTPUT
+    out_interface: lo
+    protocol: tcp
+    destination_port: 990
+    jump: REDIRECT
+    to_ports: 9990
+    comment: Required for BamBuddy virtual_printer FTPS communication
+  when: bambuddy_compose_dir is defined and ansible_os_family == "Debian"
+  register: ipt_output
+
+- name: persist iptables
+  ansible.builtin.shell: "netfilter-persistent save"
+  when: ipt_forward.changed or ipt_forward.changed or install_iptp.changed
 
 - name: wait for bambuddy to be reachable
   ansible.builtin.wait_for:

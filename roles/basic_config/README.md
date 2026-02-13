@@ -96,6 +96,12 @@ Following settings can be changed using this variable, none of this settings are
 
 The full list of choices for model and mode can be found in module: [nils_ost.bambuddy.virtual_printer](https://github.com/nils-ost/ansible-collection-bambuddy/blob/main/docs/nils_ost.bambuddy.virtual_printer_module.rst)
 
+> [!IMPORTANT]  
+> If you are not using `nils_ost.bambuddy.install_with_docker` role to install BamBuddy or are not using a Debian based OS for installation, there might additional steps required for virtual_printer to work as intended. Visit [https://wiki.bambuddy.cool/features/virtual-printer/](https://wiki.bambuddy.cool/features/virtual-printer/) for more information.
+>
+> But if you are installing BamBuddy on a Debian based system (which includes Raspberry Pi OS) with the help of `nils_ost.bambuddy.install_with_docker`. The only step you have to do afterwards, is to inject the BamBuddy virtual_printer certificate to your Bambu Studio or Orca Slicer instance. For your convenience this role is printing the certificate to the console log, so you can just copy&paste it.
+> Information about how and where to inject the certificate can be found here: [https://wiki.bambuddy.cool/features/virtual-printer/#step-2-append-the-bambuddy-ca-certificate-to-slicer](https://wiki.bambuddy.cool/features/virtual-printer/#step-2-append-the-bambuddy-ca-certificate-to-slicer)
+
 #### Example
 
 ```yaml

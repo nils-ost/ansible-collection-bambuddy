@@ -1,0 +1,3 @@
+minor_changes:
+  - virtual_printer certificate is shown to be injected to slicer configuration
+  - virtual_printer ports are properly forwared for docker installations done by this collection
