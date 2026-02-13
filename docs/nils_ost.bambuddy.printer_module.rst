@@ -285,7 +285,7 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 </td>
                 <td>always</td>
                 <td>
-                            <div>API information of created or updated print</div>
+                            <div>API information of created or updated printer</div>
                             <div>is empty if state is absent</div>
                     <br/>
                 </td>

@@ -7,6 +7,8 @@
     accesscode: "{{ bambuddy_virtual_printer.accesscode | default(omit) }}"
     model: "{{ bambuddy_virtual_printer.model | default(omit) }}"
     mode: "{{ bambuddy_virtual_printer.mode | default(omit) }}"
+    target_printer_name: "{{ bambuddy_virtual_printer.target_printer_name | default(omit) }}"
+    remote_interface_ip: "{{ bambuddy_virtual_printer.remote_interface_ip | default(omit) }}"
   delegate_to: localhost
   register: virtual_printer_config
 

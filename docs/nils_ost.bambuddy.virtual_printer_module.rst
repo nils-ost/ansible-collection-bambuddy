@@ -120,6 +120,39 @@ Parameters
             <tr>
                 <td colspan="1">
                     <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>remote_interface_ip</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">string</span>
+                    </div>
+                </td>
+                <td>
+                        <b>Default:</b><br/><div style="color: blue">""</div>
+                </td>
+                <td>
+                        <div>override the listening IP of BamBuddy for virtual_printer</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>target_printer_name</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">string</span>
+                         / <span style="color: red">required</span>
+                    </div>
+                </td>
+                <td>
+                        <b>Default:</b><br/><div style="color: blue">""</div>
+                </td>
+                <td>
+                        <div>in proxy mode the destination printer name</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
                     <b>token</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
@@ -182,6 +215,15 @@ Examples
         url: "{{ bambuddy.url }}"
         token: "{{ bambuddy.token }}"
         enable: false
+      delegate_to: localhost
+
+    # use proxy mode
+    - name: enable virtual_printer in proxy mode
+      nils_ost.bambuddy.virtual_printer:
+        url: "{{ bambuddy.url }}"
+        token: "{{ bambuddy.token }}"
+        mode: proxy
+        target_printer_name: test2
       delegate_to: localhost
 
 

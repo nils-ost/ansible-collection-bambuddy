@@ -1,3 +1,7 @@
 minor_changes:
   - virtual_printer certificate is shown to be injected to slicer configuration
   - virtual_printer ports are properly forwared for docker installations done by this collection
+  - by adding parameters 'remote_interface_ip' and 'target_printer_name' all features of virtual_printer are now usable
+
+bugfixes:
+  - some modules used exit_json in places where fail_json should be called

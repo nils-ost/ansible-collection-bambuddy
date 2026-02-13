@@ -54,9 +54,9 @@
     prometheus_token: "{{ bambuddy_common_settings.prometheus_token | default(omit) }}"
   delegate_to: localhost
 
-- name: include virtual_printer management
-  include_tasks: virtual_printer.yml
-
 - name: include printer management
   include_tasks: printers.yml
   when: bambuddy_printers.keys() | length > 0
+
+- name: include virtual_printer management
+  include_tasks: virtual_printer.yml

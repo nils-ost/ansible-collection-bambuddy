@@ -110,11 +110,11 @@ def run_module():
         if module.params["target"] == "printer":
             uri = url + "/api/v1/printers/"
         else:
-            module.exit_json(msg="invalid target", **result)
+            module.fail_json(msg="invalid target", **result)
 
         response = s.get(uri)
         if not response.status_code == 200:
-            module.exit_json(
+            module.fail_json(
                 msg="error fetching list",
                 response=response.text,
                 **result,

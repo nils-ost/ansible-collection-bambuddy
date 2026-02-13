@@ -278,7 +278,7 @@ def run_module():
 
         response = s.get(url + "/api/v1/settings/")
         if not response.status_code == 200:
-            module.exit_json(
+            module.fail_json(
                 msg="error fetching current settings",
                 response=response.text,
                 **result,
@@ -306,7 +306,7 @@ def run_module():
 
         response = s.put(url + "/api/v1/settings/", json=data)
         if not response.status_code == 200:
-            module.exit_json(
+            module.fail_json(
                 msg="error configuring settings",
                 response=response.text,
                 **result,

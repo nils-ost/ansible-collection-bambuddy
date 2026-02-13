@@ -127,7 +127,7 @@ EXAMPLES = r"""
 RETURN = r"""
 data:
     description:
-        - API information of created or updated print
+        - API information of created or updated printer
         - is empty if state is absent
     type: dict
     returned: always

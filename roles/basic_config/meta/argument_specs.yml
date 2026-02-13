@@ -151,6 +151,14 @@ argument_specs:
             required: false
             default: "immediate"
             choices: ["immediate", "review", "print_queue", "proxy"]
+          target_printer_name:
+            type: "str"
+            required: false
+            default: ""
+          remote_interface_ip:
+            type: "str"
+            required: false
+            default: ""
       bambuddy_printers:
         type: "dict"
         required: false

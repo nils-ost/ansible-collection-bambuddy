@@ -63,6 +63,18 @@ options:
         type: str
         default: 'immediate'
         choices: ['immediate', 'review', 'print_queue', 'proxy']
+    target_printer_name:
+        description:
+            - in proxy mode the destination printer name
+        required: false (true if mode is proxy)
+        type: str
+        default: ""
+    remote_interface_ip:
+        description:
+            - override the listening IP of BamBuddy for virtual_printer
+        required: false
+        type: str
+        default: ""
 """
 
 EXAMPLES = r"""
@@ -87,6 +99,15 @@ EXAMPLES = r"""
     url: "{{ bambuddy.url }}"
     token: "{{ bambuddy.token }}"
     enable: false
+  delegate_to: localhost
+
+# use proxy mode
+- name: enable virtual_printer in proxy mode
+  nils_ost.bambuddy.virtual_printer:
+    url: "{{ bambuddy.url }}"
+    token: "{{ bambuddy.token }}"
+    mode: proxy
+    target_printer_name: test2
   delegate_to: localhost
 """
 
@@ -125,6 +146,8 @@ def run_module():
             default="immediate",
             choices=["immediate", "review", "print_queue", "proxy"],
         ),
+        target_printer_name=dict(type="str", required=False, default=""),
+        remote_interface_ip=dict(type="str", required=False, default=""),
     )
 
     # seed the result dict in the object
@@ -147,15 +170,40 @@ def run_module():
 
     try:
         url = module.params["url"]
+        target_printer_id = None
 
         s = requests.Session()
         s.headers["Content-Type"] = "application/json"
         if module.params["token"] is not None and not module.params["token"] == "":
             s.headers["Authorization"] = "Bearer %s" % module.params["token"]
 
+        if module.params["enabled"] and module.params["mode"] == "proxy":
+            if module.params["target_printer_name"] == "":
+                module.fail_json(
+                    msg="'target_printer_name' is required in mode 'proxy'",
+                    **result,
+                )
+            # mapping target_printer_name to it's id
+            response = s.get(url + "/api/v1/printers/")
+            if not response.status_code == 200:
+                module.fail_json(
+                    msg="error fetching existing printers",
+                    response=response.text,
+                    **result,
+                )
+            for printer in response.json():
+                if printer["name"] == module.params["target_printer_name"]:
+                    target_printer_id = printer["id"]
+                    break
+            if target_printer_id is None:
+                module.fail_json(
+                    msg=f"could not find printer with name '{module.params['target_printer_name']}' for 'target_printer_name'",
+                    **result,
+                )
+
         response = s.get(url + "/api/v1/settings/virtual-printer")
         if not response.status_code == 200:
-            module.exit_json(
+            module.fail_json(
                 msg="error fetching current virtual_printer settings",
                 response=response.text,
                 **result,
@@ -165,10 +213,12 @@ def run_module():
         if not module.params["enabled"] == response.json()["enabled"]:
             update_required = True
         if module.params["enabled"]:
-            if not module.params["mode"] == response.json()["mode"]:
+            if not target_printer_id == response.json().get("target_printer_id", None):
                 update_required = True
-            if not module.params["model"] == response.json()["model"]:
-                update_required = True
+            for element in ["mode", "model", "remote_interface_ip"]:
+                if not module.params[element] == response.json().get(element, None):
+                    update_required = True
+                    break
 
         if not update_required:
             module.exit_json(msg="configuration already as requested", **result)
@@ -184,6 +234,8 @@ def run_module():
                 enabled=module.params["enabled"],
                 model=module.params["model"],
                 mode=module.params["mode"],
+                target_printer_id=target_printer_id,
+                remote_interface_ip=module.params["remote_interface_ip"],
             )
         else:
             data = dict(
@@ -191,7 +243,7 @@ def run_module():
             )
         response = s.put(url + "/api/v1/settings/virtual-printer", params=data)
         if not response.status_code == 200:
-            module.exit_json(
+            module.fail_json(
                 msg="error setting configuration",
                 response=response.text,
                 **result,

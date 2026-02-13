@@ -87,12 +87,14 @@ This dict contains the settings for BamBuddys virtual_printer, which you are abl
 
 Following settings can be changed using this variable, none of this settings are required to be configured, as they all have a default value:
 
-| Setting    | Type  | Default             | Comment                                                                   |
-| ---------- | ----- | ------------------- | ------------------------------------------------------------------------- |
-| enabled    | bool  | false               | state of virtual_printer                                                  |
-| accesscode | str   | 12345678            | accesscode (from slicer) for virtual printer                              |
-| model      | str   | 3DPrinter-X1-Carbon | virual_printer model (for choices see link below)                         |
-| mode       | str   | immediate           | mode of handling "prints" to virtual_printer (for choices see link below) |
+| Setting             | Type  | Default             | Comment                                                                   |
+| ------------------- | ----- | ------------------- | ------------------------------------------------------------------------- |
+| enabled             | bool  | false               | state of virtual_printer                                                  |
+| accesscode          | str   | 12345678            | accesscode (from slicer) for virtual printer                              |
+| model               | str   | 3DPrinter-X1-Carbon | virual_printer model (for choices see link below)                         |
+| mode                | str   | immediate           | mode of handling "prints" to virtual_printer (for choices see link below) |
+| target_printer_name | str   | ""                  | in proxy mode the destination printer name                                |
+| remote_interface_ip | str   | ""                  | override the listening IP of BamBuddy for virtual_printer                 |
 
 The full list of choices for model and mode can be found in module: [nils_ost.bambuddy.virtual_printer](https://github.com/nils-ost/ansible-collection-bambuddy/blob/main/docs/nils_ost.bambuddy.virtual_printer_module.rst)
 
