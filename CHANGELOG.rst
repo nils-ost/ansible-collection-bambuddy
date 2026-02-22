@@ -4,6 +4,26 @@ nils\_ost proxymanager Collection Release Notes
 
 .. contents:: Topics
 
+v1.1.0
+======
+
+Release Summary
+---------------
+
+Improvements regarding the virtual_printer -- it now works out-of-the box
+
+Minor Changes
+-------------
+
+- by adding parameters 'remote_interface_ip' and 'target_printer_name' all features of virtual_printer are now usable
+- virtual_printer certificate is shown to be injected to slicer configuration
+- virtual_printer ports are properly forwared for docker installations done by this collection
+
+Bugfixes
+--------
+
+- some modules used exit_json in places where fail_json should be called
+
 v1.0.0
 ======
 

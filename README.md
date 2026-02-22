@@ -17,7 +17,7 @@ PEP440 is the schema used to describe the versions of Ansible.
 
 ## BamBuddy version compatibility
 
-This collection has been tested against following BamBuddy versions: **=0.1.8.1** and **=0.1.9**
+This collection has been tested against following BamBuddy versions: **\>=0.1.8.1** and **<=0.2.0**
 
 ## External requirements
 
